@@ -15,8 +15,7 @@ export default function FuturisticAILogo({
   const [particles, setParticles] = useState<
     Array<{ id: number; x: number; y: number; delay: number }>
   >([]);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | undefined>(undefined);
 
   const sizeClasses = {
     small: "w-12 h-12 sm:w-16 sm:h-16",

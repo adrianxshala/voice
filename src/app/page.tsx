@@ -6,7 +6,9 @@ import AudioVisualizer from "../components/AudioVisualizer";
 // Type declarations for Speech Recognition API
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     SpeechRecognition: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     webkitSpeechRecognition: any;
   }
 }
@@ -39,6 +41,7 @@ export default function VoiceAssistant() {
     volume: 1,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any>(null);
   const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
 
@@ -56,7 +59,7 @@ export default function VoiceAssistant() {
 
     loadVoices();
     window.speechSynthesis.onvoiceschanged = loadVoices;
-  }, []);
+  }, [voiceSettings.voice]);
 
   // Start continuous listening
   const startAssistant = () => {
@@ -89,9 +92,11 @@ export default function VoiceAssistant() {
       }, 100);
     };
 
-    recognition.onerror = (event: any) => {
-      console.error("Speech recognition error:", event.error);
-      setError(`Speech recognition error: ${event.error}`);
+    recognition.onerror = (event: Event) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorEvent = event as any;
+      console.error("Speech recognition error:", errorEvent.error);
+      setError(`Speech recognition error: ${errorEvent.error}`);
       setListening(false);
     };
 
